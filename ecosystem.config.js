@@ -8,7 +8,7 @@ module.exports = {
     // First application
     {
       name: 'lsc-real-estate',
-      script: './bin/www',
+      script: 'server.js',
       env: {
         NODE_ENV: 'default',
       },
