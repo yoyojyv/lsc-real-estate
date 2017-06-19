@@ -1,0 +1,26 @@
+<div class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="/" class="navbar-brand">LSC RealEstate</a>
+
+      <button *ngIf="userInfo?.role" class="navbar-toggle" type="button" (click)="toggleMenu()" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" [ngClass]="{'show': isMenuExpanded}" id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li *ngIf="userInfo?.role">
+          <a [routerLink]="['/properties']">매물 리스트</a>
+        </li>
+        <li *ngIf="userInfo?.role === 'super_admin'">
+          <a [routerLink]="['/users']">유저 리스트</a>
+        </li>
+      </ul>
+      <ul *ngIf="userInfo" class="nav navbar-nav navbar-right">
+        <li><a [routerLink]="['/logout']" >로그아웃</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

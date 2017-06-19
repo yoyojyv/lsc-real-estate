@@ -1,0 +1,315 @@
+<div class="container">
+
+  <div class="page-header">
+    <h2>{{propertyForm?.value?._id != null && propertyForm?.value?._id.length > 0 ? '매물 수정' : '매물 등록'}}</h2>
+  </div>
+
+  <form [formGroup]="propertyForm" class="form-horizontal">
+
+    <input type="hidden" id="_id" formControlName="_id">
+    <input type="hidden" id="no" formControlName="no">
+    <input type="hidden" id="zip" formControlName="zip">
+
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <fieldset>
+          <legend>기본 정보</legend>
+          <div class="form-group">
+            <label for="title" class="col-md-2 control-label">매물 이름</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="title" formControlName="title" placeholder="매물 이름">
+            </div>
+
+            <!--<div *ngIf="formErrors.title">-->
+              <!--<div *ngFor="let errors of formErrors.title">-->
+                <!--<p class="alert validate-alert">{{ errors }}-->
+                <!--<p>-->
+              <!--</div>-->
+            <!--</div>-->
+
+            <div *ngIf="propertyForm.controls['title'].hasError('required')" class="alert validate-alert">{{validationMessages.title.required}}</div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="select" class="col-md-2 control-label">우선순위</label>
+            <div class="col-md-10">
+              <select class="form-control" id="select" formControlName="priority">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+              </select>
+            </div>
+
+            <div *ngIf="propertyForm.controls['priority'].hasError('required')" class="alert validate-alert">{{validationMessages.priority.required}}</div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="select" class="col-md-2 control-label">계약 진행 상태</label>
+            <div class="col-md-10">
+              <select class="form-control" formControlName="status">
+                <option value="in_progress">진행중</option>
+                <option value="complete">완료</option>
+              </select>
+            </div>
+
+            <div *ngIf="propertyForm.controls['status'].hasError('required')" class="alert validate-alert">{{validationMessages.status.required}}</div>
+
+          </div>
+
+
+
+        </fieldset>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+
+        <fieldset>
+          <legend>분류</legend>
+          <div class="form-group">
+            <label for="select" class="col-md-2 control-label">대분류</label>
+            <div class="col-md-10">
+              <select class="form-control" formControlName="type">
+                <option value="음식점">음식점</option>
+                <option value="패스트푸드">패스트푸드</option>
+                <option value="주류점">주류점</option>
+                <option value="오락/스포츠">오락/스포츠</option>
+                <option value="판매점">판매점</option>
+                <option value="서비스업/기타">서비스업/기타</option>
+                <option value="상가주택/빌딩매매">상가주택/빌딩매매</option>
+                <option value="점포매매">점포매매</option>
+                <option value="분양상가">분양상가</option>
+              </select>
+            </div>
+
+            <div *ngIf="propertyForm.controls['type'].hasError('required') && (propertyForm.controls['type'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.type.required}}</div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="typeDetail" class="col-md-2 control-label">상세분류</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="typeDetail" formControlName="typeDetail" placeholder="상세분류">
+            </div>
+
+            <div *ngIf="propertyForm.controls['typeDetail'].hasError('required') && (propertyForm.controls['typeDetail'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.typeDetail.required}}</div>
+
+          </div>
+
+        </fieldset>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <fieldset>
+          <legend>주소 <span style="font-size: 10px;">(주소1은 우편번호 찾기로 선택 할 것)</span></legend>
+
+          <div class="form-group">
+            <label for="address1" class="col-md-2 control-label">주소1</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="address1" formControlName="address1" placeholder="주소1" readonly>
+            </div>
+
+            <div *ngIf="propertyForm.controls['address1'].hasError('required') && (propertyForm.controls['address1'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.address1.required}}</div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="address2" class="col-md-2 control-label">주소2</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="address2" formControlName="address2" placeholder="주소2">
+            </div>
+
+            <div *ngIf="propertyForm.controls['address2'].hasError('required') && (propertyForm.controls['address2'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.address2.required}}</div>
+
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-12">
+              <btn-daum-address (result)="setDaumAddressApi($event)" [options]="daumAddressOptions" style="float: right;"></btn-daum-address>
+            </div>
+          </div>
+
+        </fieldset>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+        <fieldset>
+          <legend>업종</legend>
+          <div class="form-group">
+            <label for="currentBusinessType" class="col-md-2 control-label">현업종</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="currentBusinessType" formControlName="currentBusinessType" placeholder="현업종">
+            </div>
+
+            <div *ngIf="propertyForm.controls['currentBusinessType'].hasError('required') && (propertyForm.controls['currentBusinessType'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.currentBusinessType.required}}</div>
+
+          </div>
+
+
+          <div class="form-group">
+            <label for="suggestedBusinessType" class="col-md-2 control-label">추천업종</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" id="suggestedBusinessType" formControlName="suggestedBusinessType" placeholder="추천업종">
+            </div>
+
+            <div *ngIf="propertyForm.controls['suggestedBusinessType'].hasError('required') && (propertyForm.controls['suggestedBusinessType'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.suggestedBusinessType.required}}</div>
+
+          </div>
+
+
+
+        </fieldset>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <fieldset>
+          <legend>면적/층</legend>
+          <div class="form-group">
+            <label for="sizeSupplyPyeong" class="col-md-2 control-label">공급면적(평)</label>
+            <div class="col-md-10">
+              <input type="number" class="form-control" id="sizeSupplyPyeong" formControlName="sizeSupplyPyeong" placeholder="공급면적(평)" (change)="changeSizeSupply('sizeSupplyPyeong')">
+            </div>
+
+            <div *ngIf="propertyForm.controls['sizeSupplyPyeong'].hasError('required') && (propertyForm.controls['sizeSupplyPyeong'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.sizeSupplyPyeong.required}}</div>
+
+          </div>
+
+
+
+          <div class="form-group">
+            <label for="sizeSupplySquareMeter" class="col-md-2 control-label">공급면적(㎡)</label>
+            <div class="col-md-10">
+              <input type="number" class="form-control" id="sizeSupplySquareMeter" formControlName="sizeSupplySquareMeter" placeholder="공급면적(㎡)" (change)="changeSizeSupply('sizeSupplySquareMeter')">
+            </div>
+
+            <div *ngIf="propertyForm.controls['sizeSupplySquareMeter'].hasError('required') && (propertyForm.controls['sizeSupplySquareMeter'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.sizeSupplySquareMeter.required}}</div>
+
+          </div>
+
+
+          <div class="form-group">
+            <label for="floor" class="col-md-2 control-label">층</label>
+            <div class="col-md-10">
+              <input type="number" class="form-control" id="floor" formControlName="floor" placeholder="층">
+            </div>
+
+            <div *ngIf="propertyForm.controls['floor'].hasError('required') && (propertyForm.controls['floor'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.floor.required}}</div>
+
+          </div>
+
+
+
+        </fieldset>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+        <fieldset>
+          <legend>금액 <span style="font-size: 10px;">(만원)</span></legend>
+
+          <div class="form-group">
+            <label for="deposit" class="col-md-2 control-label">보증금</label>
+            <div class="col-md-10">
+              <input type="number" class="form-control" id="deposit" formControlName="deposit" placeholder="보증금" (change)="changeAmount()">
+            </div>
+
+            <div *ngIf="propertyForm.controls['deposit'].hasError('required') && (propertyForm.controls['deposit'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.deposit.required}}</div>
+
+          </div>
+
+
+          <div class="form-group">
+            <label for="premium" class="col-md-2 control-label">권리금</label>
+            <div class="col-md-10">
+              <input type="number" class="form-control" id="premium" formControlName="premium" placeholder="권리금" (change)="changeAmount()">
+            </div>
+
+            <div *ngIf="propertyForm.controls['premium'].hasError('required') && (propertyForm.controls['premium'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.premium.required}}</div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="monthlyRevenue" class="col-md-2 control-label">월수익</label>
+            <div class="col-md-10">
+              <input type="number" class="form-control" id="monthlyRevenue" formControlName="monthlyRevenue" placeholder="월수익">
+            </div>
+
+            <div *ngIf="propertyForm.controls['monthlyRevenue'].hasError('required') && (propertyForm.controls['monthlyRevenue'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.monthlyRevenue.required}}</div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="monthlyRent" class="col-md-2 control-label">월세</label>
+            <div class="col-md-10">
+              <input type="number" class="form-control" id="monthlyRent" formControlName="monthlyRent" placeholder="월세">
+            </div>
+
+            <div *ngIf="propertyForm.controls['monthlyRent'].hasError('required') && (propertyForm.controls['monthlyRent'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.monthlyRent.required}}</div>
+
+          </div>
+
+
+        </fieldset>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <fieldset>
+          <legend>설명</legend>
+          <div class="form-group">
+            <label for="description" class="col-md-12 control-label">Description</label>
+            <div class="col-md-12">
+              <textarea class="form-control" rows="5" id="description" formControlName="description" placeholder="Description"></textarea>
+            </div>
+
+            <div *ngIf="propertyForm.controls['description'].hasError('required') && (propertyForm.controls['description'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.description.required}}</div>
+
+          </div>
+
+
+
+        </fieldset>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+        <fieldset>
+          <legend>비고</legend>
+          <div class="form-group">
+            <label for="remarks" class="col-md-12 control-label">비고</label>
+            <div class="col-md-12">
+              <textarea class="form-control" rows="5" id="remarks" formControlName="remarks" placeholder="비고"></textarea>
+            </div>
+
+            <div *ngIf="propertyForm.controls['remarks'].hasError('required') && (propertyForm.controls['remarks'].touched || trySubmit)" class="alert validate-alert">{{validationMessages.remarks.required}}</div>
+
+          </div>
+
+
+        </fieldset>
+      </div>
+
+    </div>
+
+
+      <div class="button-group pull-right">
+        <input type="button" class="btn btn-default" (click)="back()" value="뒤로" />
+        <input type="button" class="btn btn-primary" (click)="saveProperty()" value="저장" /> <!-- [disabled]="!propertyForm.valid" -->
+      </div>
+
+  </form>
+
+  <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+    <img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" alt="접기 버튼">
+  </div>
+
+</div>

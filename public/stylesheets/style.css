@@ -1,0 +1,88 @@
+body {
+  padding: 0;
+  font: 13px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+h2 {
+  font-size: 28px;
+  margin-top: 11.5px;
+}
+
+footer p {
+  margin: 0 auto;
+  text-align: center;
+}
+
+legend {
+  border-bottom: 1px dashed #e5e5e5;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>thead>tr>td, .table>tbody>tr>td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.navbar {
+  margin-bottom: 10px;
+}
+
+.page-header {
+  margin: 10px 0 23px;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-padding {
+  padding: 0;
+}
+.table-sortable > thead > tr > th {
+  cursor: pointer;
+  position: relative;
+  background-image: none;
+}
+
+.table-sortable > thead > tr > th:after,
+.table-sortable > thead > tr > th.sortable.sort-asc:after,
+.table-sortable > thead > tr > th.sortable.sort-desc:after {
+  font-family: FontAwesome;
+  padding-left: 5px;
+}
+
+.table-sortable > thead > tr > th.sortable:after {
+  content: "\f0dc";
+  color: #ddd;
+}
+.table-sortable > thead > tr > th.sortable.sort-asc:after {
+  content: "\f0de";
+  color: #767676;
+}
+.table-sortable > thead > tr > th.sortable.sort-desc:after {
+  content: "\f0dd";
+  color: #767676;
+}
+
+textarea, textarea.form-control, input.form-control, input[type="text"], input[type="password"], input[type="email"],
+input[type="number"], [type="text"].form-control, [type="password"].form-control, [type="email"].form-control,
+[type="tel"].form-control, [contenteditable].form-control
+{
+  font-size: 13px;
+}
+
+select, select.form-control {
+  font-size: 13px;
+}
+
+
+.validate-alert {
+  color: red;
+}

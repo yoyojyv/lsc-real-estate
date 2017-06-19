@@ -1,0 +1,48 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="page-header">
+        <h2 style="display: inline">유저 리스트</h2>
+
+        <input *ngIf="(currentUserInfo?.isAdmin)" type="button" class="btn btn-primary" style="float: right;" (click)="navigateNew()" value="새 유저 등록"/>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>아이디</th>
+              <th>이름</th>
+              <th>이메일</th>
+              <th>대표전화</th>
+              <th>담당전화</th>
+              <th>권한</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.username }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.mainPhone }}</td>
+              <td>{{ user.userPhone }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <input type="button" class="btn btn-default btn-sm btn-danger " value="삭제" (click)="removeUser(user)"/>
+                <input type="button" class="btn btn-default btn-sm btn-primary " value="수정" (click)="editUser(user)"/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="text-align: center;">
+        <pager [pager]="pager" (pageChanged)="pageChanged($event)"></pager>
+      </div>
+
+    </div>
+  </div>
+
+</div>

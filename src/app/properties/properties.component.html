@@ -1,0 +1,89 @@
+<div class="container no-padding">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="page-header">
+        <h2 style="display: inline">매물 리스트</h2>
+
+        <input *ngIf="(currentUserInfo?.isAdmin)" type="button" class="btn btn-primary" style="float: right;" (click)="navigateNew()" value="새 매물 등록"/>
+      </div>
+
+      <div class="row" style="padding: 10px;">
+        <div class="col-xs-2 col-sm-2">
+          <select class="form-control" [(ngModel)]="pageParam.limit" (change)="search()"
+                  style="width:auto;">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="col-xs-10 col-sm-6 col-sm-offset-4">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for..." [(ngModel)]="pageParam.search"
+                   (keydown.enter)="search()">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" (click)="search()">검색</button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-sortable">
+          <thead>
+          <tr>
+            <!-- [class]="selectedClass(column.variable)"  -->
+            <th *ngFor="let column of columns"
+                [class.sortable]="column.sortable"
+                [class.sort-desc]="column.variable === sort.property && sort.direction === 'desc'"
+                [class.sort-asc]="column.variable === sort.property && sort.direction === 'asc'"
+                (click)="changeSorting(column.variable)">
+              {{column.display}}
+            </th>
+            <!--<th>Action</th>-->
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let p of properties" (click)="navigateDetail(p)" style="cursor: pointer;">
+            <td>
+              <span style="color: white; font-weight: bold; padding: 4px;"
+                    [style.background-color]="getPriorityColor(p.priority)">{{p.priority | uppercase }}</span>
+            </td>
+            <td>
+              {{ p.no | number }}
+            </td>
+            <td>
+              {{ p.status === 'in_progress' ? '진행중' : '완료' }}
+            </td>
+            <td>{{ p.title }}</td>
+            <td>{{ p.address1 }}</td>
+            <td>
+              {{ p.type }} / <br>
+              {{ p.typeDetail }}
+            </td>
+            <td>
+              {{ p.deposit | number }} / <br>
+              {{ p.premium | number}}
+            </td>
+            <td>{{ p.sizeSupplyPyeong | number }}/{{ p.sizeSupplySquareMeter | number:'1.2-2' }}</td>
+            <td>{{ p.floor }}</td>
+            <td>
+              {{p.personInCharge.name}}
+            </td>
+            <!--<td>-->
+              <!--<input type="button" class="btn btn-sm btn-primary" value="상세" (click)="navigateShortDetail(p)"/>-->
+            <!--</td>-->
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="text-align: center;">
+        <pager [pager]="pager" (pageChanged)="pageChanged($event)"></pager>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>

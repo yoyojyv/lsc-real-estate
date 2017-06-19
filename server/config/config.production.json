@@ -1,0 +1,11 @@
+{
+  "database": {
+    "host": "localhost",
+    "database": "lsc-real-estate",
+    "user": "lscrealestate",
+    "password": "kjh0426!!Lsc25@!"
+  },
+  "jwt": {
+    "secret": "RlaWoDudCjsWoWlgkskdlsmsRnlduqnj)$@^2016"
+  }
+}

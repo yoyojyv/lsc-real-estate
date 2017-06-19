@@ -1,0 +1,155 @@
+<div class="container" *ngIf="property">
+
+  <div class="page-header">
+    <h2>{{property.title}}</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">담당</div>
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <td>담당자</td>
+              <td>{{property.personInCharge.name}}</td>
+            </tr>
+            <tr>
+              <td>대표전화</td>
+              <td>{{property.personInCharge.mainPhone}}</td>
+            </tr>
+            <tr>
+              <td>담당전화</td>
+              <td>{{property.personInCharge.userPhone}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">매물정보</div>
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <td>이름</td>
+              <td>
+                {{property.title}}
+              </td>
+            </tr>
+            <tr>
+              <td>계약 진행 상태</td>
+              <td>
+                <span *ngIf="property.status === 'in_progress'">진행중</span>
+                <span *ngIf="property.status === 'complete'">완료</span>
+              </td>
+            </tr>
+            <tr>
+              <td>매물 형태</td>
+              <td>{{property.type}} / {{property.typeDetail}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">기본정보</div>
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <td>물건번호</td>
+              <td>{{property.no}}</td>
+            </tr>
+            <tr>
+              <td>주소</td>
+              <td>{{property.address1}}</td>
+            </tr>
+            <tr>
+              <td>현업종</td>
+              <td>{{property.currentBusinessType}}</td>
+            </tr>
+            <tr>
+              <td>추천업종</td>
+              <td>{{property.suggestedBusinessType}}</td>
+            </tr>
+            <tr>
+              <td>평수</td>
+              <td>{{property.sizeSupplyPyeong}} 평 / {{property.sizeSupplySquareMeter}} ㎡</td>
+            </tr>
+            <tr>
+              <td>건물층수</td>
+              <td>{{property.floor}}층</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">금액 (만원)</div>
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <td>보증금</td>
+              <td>{{property.deposit | number}}</td>
+            </tr>
+            <tr>
+              <td>권리금</td>
+              <td>{{property.premium | number}}</td>
+            </tr>
+            <tr>
+              <td>월수익</td>
+              <td>{{property.monthlyRevenue | number}}</td>
+            </tr>
+            <tr>
+              <td>월세</td>
+              <td>{{property.monthlyRent | number}}</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                실투자비 = 보증금 + 권리금 <br>
+                {{ ( property.deposit + property.premium ) | number }} = {{property.deposit | number}} + {{property.premium | number}}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">Description</div>
+        <div class="panel-body">
+          <pre>{{property.description}}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="currentUserInfo?.isAdmin" class="row">
+    <div class="col-xs-12 col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">비고</div>
+        <div class="panel-body">
+          <pre>{{property?.remarks}}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="button-group pull-right">
+    <input *ngIf="currentUserInfo?.isAdmin" type="button" class="btn btn-danger" value="삭제" (click)="remove(property?._id)"/>
+    <input *ngIf="currentUserInfo?.isAdmin" type="button" class="btn btn-primary" value="수정" (click)="navigateEdit()"/>
+    <input type="button" class="btn btn-default" value="뒤로" (click)="back()"/>
+  </div>
+
+
+</div>
