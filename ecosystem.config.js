@@ -29,7 +29,7 @@ module.exports = {
       ref: 'origin/master',
       repo: 'git@bitbucket.org:yoyojyv/lsc-real-estate.git',
       path: '/var/www/lsc-real-estate',
-      'post-deploy': 'npm install && ng build --target=production --environment=prod --aot false && pm2 reload ecosystem.config.js --env production',
+      'post-deploy': 'npm install && ng build --target=production --environment=prod --aot false && pm2 startOrRestart ecosystem.config.js --env production',
     }
   }
 };
