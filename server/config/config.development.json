@@ -3,9 +3,9 @@
     "host": "localhost:27017",
     "database": "lsc-real-estate",
     "user": "lscrealestate",
-    "password": "lsc2521"
+    "password": "password"
   },
   "jwt": {
-    "secret": "RlaWoDudCjsWoWlgkskdlsmsRnlduqnj)$@^2016"
+    "secret": "secret"
   }
 }

@@ -66,7 +66,7 @@ class Server {
     app.use(express.static(path.join(__dirname, 'public')));
 
     // express-paginate
-    app.use(paginate.middleware(10, 50));
+    app.use(paginate.middleware(10, 100));
   }
 
   initCustomMiddleware() {
